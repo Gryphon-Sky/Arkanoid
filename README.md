@@ -2,5 +2,8 @@ Arkanoid
 ========
 
 Written on C# for Unity 4.5.4f1
+http://unity3d.com/
 
-Art by Kenny, www.kenney.nl
+Art by Kenney
+http://opengameart.org/content/puzzle-game-art
+http://www.kenney.nl
