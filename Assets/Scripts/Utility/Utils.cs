@@ -18,7 +18,6 @@ public static class Utils
     
     #region Helpers
     
-    [Conditional("UNITY_EDITOR")]
     public static void Log(string message)
     {
 #if UNITY_EDITOR
