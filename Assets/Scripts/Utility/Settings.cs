@@ -7,7 +7,9 @@ public class Settings : MonoBehaviour
 
     #region customizable
 
+#if UNITY_EDITOR
     public bool DebugMode = false;
+#endif
     public bool Sounds = true;
 
     public int DefaultBrickScore = 11;
