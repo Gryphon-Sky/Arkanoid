@@ -18,10 +18,13 @@ public class InputController : MonoBehaviour, IInputProvider
 
     private void FixedUpdate()
     {
-        InputX = Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1);
-        if(Utils.IsEqual0(InputX))
+        float mouse = Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1);
+        float keyboard = Input.GetAxis("Horizontal");
+
+        InputX = mouse;
+        if(Mathf.Abs(keyboard) > Mathf.Abs(mouse))
         {
-            InputX = Input.GetAxis("Horizontal");
+            InputX = keyboard;
         }
     }
 

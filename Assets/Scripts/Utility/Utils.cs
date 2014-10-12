@@ -45,11 +45,6 @@ public static class Utils
         }
     }
     
-    public static bool IsEqual0(float a)
-    {
-        return (Math.Abs(a) < EPSILON);
-    }
-
     public static Vector2 DegreesToVector2(float degrees)
     {
         float radians = Mathf.Deg2Rad * degrees;
@@ -57,16 +52,7 @@ public static class Utils
     }
     
     #endregion
-    
-    ////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
 
-    #region private
-    
-    private const float EPSILON = 0.0001f;
-    
-    #endregion
-    
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 }
