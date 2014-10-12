@@ -28,8 +28,9 @@ public class Paddle : MonoBehaviour
     
     #region public methods
     
-    public void Init(float speed)
+    public void Init(IInputProvider iInputProvider, float speed)
     {
+        _iInputProvider = iInputProvider;
         _speed = speed;
 
         _leftBorder = LeftWall.localPosition.x + (LeftWall.localScale.x + Width) / 2;
@@ -54,20 +55,11 @@ public class Paddle : MonoBehaviour
         Width = GetComponent<SpriteRenderer>().sprite.rect.width;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        float input = Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1);
-        if(Utils.IsEqual0(input))
-        {
-            input = Input.GetAxis("Horizontal");
-        }
-
-        if(!Utils.IsEqual0(input))
-        {
-            Vector3 pos = transform.localPosition;
-            pos.x = Mathf.Clamp(pos.x + input * _speed, _leftBorder, _rightBorder);
-            transform.localPosition = pos;
-        }
+        Vector3 pos = transform.localPosition;
+        pos.x = Mathf.Clamp(pos.x + _iInputProvider.InputX * _speed, _leftBorder, _rightBorder);
+        transform.localPosition = pos;
     }
 
     #endregion
@@ -77,6 +69,7 @@ public class Paddle : MonoBehaviour
     
     #region private members
 
+    private IInputProvider _iInputProvider;
     private float _speed;
     private float _leftBorder;
     private float _rightBorder;

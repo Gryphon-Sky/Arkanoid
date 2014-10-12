@@ -8,6 +8,7 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
     #region exposed
 
     public UIController UIController;
+    public InputController InputController;
     public SoundController SoundController;
 
     public Ball Ball;
@@ -181,7 +182,7 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
         DebugShadow.SetActive(Utils.Settings.DebugMode);
 #endif
         Ball.Init(this, OnBallBounced, OnLose);
-        Paddle.Init(Utils.Settings.PaddleSpeed);
+        Paddle.Init(InputController, Utils.Settings.PaddleSpeed);
         BricksController.Init(OnBrickDestroyed, OnLastBrickDestroyed);
         ScoreController.Init(UIController.SetScore, UIController.SetHighscore);
 
