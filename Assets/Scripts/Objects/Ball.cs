@@ -61,9 +61,10 @@ public class Ball : MonoBehaviour
             {
                 Launch(paddlePart);
             }
-            else if(Utils.IsEqual0(_initialPaddlePart))
+            else if(!_isPaddlePartInitialized)
             {
                 _initialPaddlePart = paddlePart;
+                _isPaddlePartInitialized = true;
             }
         }
         
@@ -123,11 +124,12 @@ public class Ball : MonoBehaviour
 
     private void Start()
     {
+        _isPaddlePartInitialized = false;
         _initialPaddlePart = 0.0f;
         _initialShift = transform.position.x - Paddle.gameObject.transform.position.x;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if(!_gameStartedProvider.GameStarted)
         {
@@ -161,6 +163,7 @@ public class Ball : MonoBehaviour
     private Action _onExit;
     private float _speed;
     private PositionResetter _positionInitializer;
+    private bool _isPaddlePartInitialized;
     private float _initialPaddlePart;
     private float _initialShift;
     
