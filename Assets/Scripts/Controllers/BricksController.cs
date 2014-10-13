@@ -32,7 +32,7 @@ public class BricksController : MonoBehaviour
         _onLastBrickDestroyed = onLastBrickDestroyed;
     }
     
-    public void SpawnBricksForLevel(int level)
+    public void SpawnBricksForLevel(int level, int maxLevel)
     {
         Color bgMask = Color.red;
         switch((level - 1) % 3)
@@ -77,7 +77,7 @@ public class BricksController : MonoBehaviour
         int top = topBorder - SpacingY - (brickSizeY / 2);
         int shiftY = -brickSizeY - SpacingY;
         
-        int maxLines = Utils.Settings.MaxLevel + 1;
+        int maxLines = maxLevel + 1;
         int numLines = level + 1;
         int topLine = (maxLines - numLines) / 2;
 

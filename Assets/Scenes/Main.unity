@@ -1228,6 +1228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea3ffaa1d76b2f14c9a4e5a4af94f9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Settings: {fileID: 738548824}
   UIController: {fileID: 1657760175}
   InputController: {fileID: 731177626}
   SoundController: {fileID: 1131419034}

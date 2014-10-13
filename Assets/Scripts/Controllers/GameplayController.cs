@@ -7,6 +7,8 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
 
     #region exposed
 
+    public Settings Settings;
+
     public UIController UIController;
     public InputController InputController;
     public SoundController SoundController;
@@ -67,9 +69,9 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
     
     public void OnBrickDestroyed()
     {
-        int penalty = _consecutiveBounces * Utils.Settings.BouncePenalty;
-        int multiplier = Level * Utils.Settings.LevelMultiplier;
-        ScoreController.AddScore(Utils.Settings.DefaultBrickScore, penalty, Utils.Settings.MinBrickScore, multiplier);
+        int penalty = _consecutiveBounces * Settings.BouncePenalty;
+        int multiplier = Level * Settings.LevelMultiplier;
+        ScoreController.AddScore(Settings.DefaultBrickScore, penalty, Settings.MinBrickScore, multiplier);
 
         _consecutiveBounces = 0;
 
@@ -78,7 +80,7 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
     
     public void OnLastBrickDestroyed()
     {
-        if(Level == Utils.Settings.MaxLevel)
+        if(Level == Settings.MaxLevel)
         {
             GameComplete();
         }
@@ -91,7 +93,7 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
     public void OnLose()
     {
 #if UNITY_EDITOR
-        if(!Utils.Settings.DebugMode)
+        if(!Settings.DebugMode)
         {
             --Lives;
         }
@@ -119,7 +121,7 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
     private void InitGame()
     {
         Level = 1;
-        Lives = Utils.Settings.MaxLives;
+        Lives = Settings.MaxLives;
         ScoreController.ResetScore();
         
         InitLevel();
@@ -127,8 +129,8 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
     
     private void InitLevel()
     {
-        Ball.SetSpeed(Utils.Settings.InitialBallSpeed + Utils.Settings.BallSpeedPerLevel * (Level - 1));
-        BricksController.SpawnBricksForLevel(Level);
+        Ball.SetSpeed(Settings.InitialBallSpeed + Settings.BallSpeedPerLevel * (Level - 1));
+        BricksController.SpawnBricksForLevel(Level, Settings.MaxLives);
 
         RestartLevel();
     }
@@ -179,11 +181,12 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
     private void Awake()
     {
 #if UNITY_EDITOR
-        DebugShadow.SetActive(Utils.Settings.DebugMode);
+        DebugShadow.SetActive(Settings.DebugMode);
 #endif
-        Ball.Init(this, OnBallBounced, OnLose);
-        Paddle.Init(InputController, Utils.Settings.PaddleSpeed);
+        Ball.Init(this, Settings.MaxAngle, OnBallBounced, OnLose);
+        Paddle.Init(InputController, Settings.PaddleSpeed);
         BricksController.Init(OnBrickDestroyed, OnLastBrickDestroyed);
+        SoundController.Init(Settings.Sounds);
         ScoreController.Init(UIController.SetScore, UIController.SetHighscore);
 
         InitGame();

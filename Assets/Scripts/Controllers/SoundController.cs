@@ -24,6 +24,18 @@ public class SoundController : MonoBehaviour
 
     #region public methods
 
+    public void Init(bool soundEnabled)
+    {
+        _soundEnabled = soundEnabled;
+    }
+    
+    #endregion
+    
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    
+    #region public methods
+    
     public void PlayBrickDestroyedSound()
     {
         PlayClip(BrickDestroyed);
@@ -63,12 +75,21 @@ public class SoundController : MonoBehaviour
 
     private void PlayClip(AudioClip clip)
     {
-        if(Utils.Settings.Sounds && (clip != null))
+        if(_soundEnabled && (clip != null))
         {
             AudioSource.PlayClipAtPoint(clip, Vector3.zero);
         }
     }
     
+    #endregion
+    
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    
+    #region private members
+
+    private bool _soundEnabled;
+
     #endregion
     
     ////////////////////////////////////////////////////////////////////////////////

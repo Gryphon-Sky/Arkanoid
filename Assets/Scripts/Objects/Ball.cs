@@ -20,9 +20,10 @@ public class Ball : MonoBehaviour
     
     #region public methods
 
-    public void Init(IGameStartedProvider gameStartedProvider, Action<bool> onBounce, Action onExit)
+    public void Init(IGameStartedProvider gameStartedProvider, float maxAngle, Action<bool> onBounce, Action onExit)
     {
         _gameStartedProvider = gameStartedProvider;
+        _maxAngle = maxAngle;
         _onBounce = onBounce;
         _onExit = onExit;
     }
@@ -84,7 +85,7 @@ public class Ball : MonoBehaviour
         // check and fix velocity
         if(_gameStartedProvider.GameStarted)
         {
-            Vector2 maxAngleTemplate = Utils.DegreesToVector2(Utils.Settings.MaxAngle);
+            Vector2 maxAngleTemplate = Utils.DegreesToVector2(_maxAngle);
 
             Vector2 velocity = rigidbody2D.velocity.normalized;
             if(Mathf.Abs(velocity.y) < maxAngleTemplate.y)
@@ -148,7 +149,7 @@ public class Ball : MonoBehaviour
     
     private void Launch(float paddlePart)
     {
-        rigidbody2D.velocity = _speed * Utils.DegreesToVector2(paddlePart * Utils.Settings.MaxAngle);
+        rigidbody2D.velocity = _speed * Utils.DegreesToVector2(paddlePart * _maxAngle);
     }
     
     #endregion
@@ -166,6 +167,7 @@ public class Ball : MonoBehaviour
     private bool _isPaddlePartInitialized;
     private float _initialPaddlePart;
     private float _initialShift;
+    private float _maxAngle;
     
     #endregion
     
