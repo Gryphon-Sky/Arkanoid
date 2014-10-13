@@ -9,7 +9,6 @@ public static class Utils
     
     #region Helpers
     
-    [Conditional("UNITY_EDITOR")]
     public static void Log(string message)
     {
         UnityEngine.Debug.Log(message);
