@@ -21,12 +21,7 @@ public static class Utils
     [Conditional("UNITY_EDITOR")]
     public static void Log(string message)
     {
-#if UNITY_EDITOR
-        if(Settings.DebugMode)
-        {
-            UnityEngine.Debug.Log(message);
-        }
-#endif
+        UnityEngine.Debug.Log(message);
     }
 
     public static void InvokeAction(Action action)
