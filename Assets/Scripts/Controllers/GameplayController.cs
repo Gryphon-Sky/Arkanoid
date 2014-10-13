@@ -4,9 +4,23 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
 {
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
-
+    
     #region exposed
 
+    public enum BounceType
+    {
+        Wall,
+        Paddle,
+        Brick
+    }
+
+    #endregion
+
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    
+    #region exposed
+    
     public Settings Settings;
 
     public UIController UIController;
@@ -61,10 +75,27 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
     
     #region events
 
-    public void OnBallBounced(bool paddle)
+    public void OnBallBounced(GameObject bounce)
     {
-        ++_consecutiveBounces;
-        SoundController.PlayBallBouncedSound(paddle);
+        BounceType bounceType = BounceType.Wall;
+
+        Brick brick = bounce.GetComponent<Brick>();
+        if(brick != null)
+        {
+            bounceType = BounceType.Brick;
+            brick.OnBallBounced();
+            _consecutiveBounces = 0;
+        }
+        else
+        {
+            if(bounce == Paddle.gameObject)
+            {
+                bounceType = BounceType.Paddle;
+            }
+            ++_consecutiveBounces;
+        }
+
+        SoundController.PlayBallBouncedSound(bounceType);
     }
     
     public void OnBrickDestroyed()
@@ -72,10 +103,6 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
         int penalty = _consecutiveBounces * Settings.BouncePenalty;
         int multiplier = Level * Settings.LevelMultiplier;
         ScoreController.AddScore(Settings.DefaultBrickScore, penalty, Settings.MinBrickScore, multiplier);
-
-        _consecutiveBounces = 0;
-
-        SoundController.PlayBrickDestroyedSound();
     }
     
     public void OnLastBrickDestroyed()

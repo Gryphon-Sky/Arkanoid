@@ -9,7 +9,7 @@ public class Ball : MonoBehaviour
     ////////////////////////////////////////////////////////////////////////////////
     
     #region exposed
-
+    
     public Paddle Paddle;
     public Collider2D ExitZone;
     
@@ -20,7 +20,8 @@ public class Ball : MonoBehaviour
     
     #region public methods
 
-    public void Init(IGameStartedProvider gameStartedProvider, float maxAngle, Action<bool> onBounce, Action onExit)
+    public void Init(IGameStartedProvider gameStartedProvider, float maxAngle, Action<GameObject> onBounce,
+                     Action onExit)
     {
         _gameStartedProvider = gameStartedProvider;
         _maxAngle = maxAngle;
@@ -53,8 +54,12 @@ public class Ball : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        bool touchingPaddle = (collision.gameObject == Paddle.gameObject);
-        if(touchingPaddle)
+        if(_isPaddlePartInitialized && !_gameStartedProvider.GameStarted)
+        {
+            return;
+        }
+
+        if(collision.gameObject == Paddle.gameObject)
         {
             float paddlePart = 2 * (collision.contacts[0].point.x - Paddle.transform.position.x) / Paddle.Width;
 
@@ -66,16 +71,6 @@ public class Ball : MonoBehaviour
             {
                 _initialPaddlePart = paddlePart;
                 _isPaddlePartInitialized = true;
-            }
-        }
-        
-        if(_gameStartedProvider.GameStarted)
-        {
-            Brick brick = collision.gameObject.GetComponent<Brick>();
-            if(brick == null)
-            {
-                // we need reduce score and play default sound only when ball collides walls or paddle
-                Utils.InvokeAction(_onBounce, touchingPaddle);
             }
         }
     }
@@ -95,11 +90,7 @@ public class Ball : MonoBehaviour
                 rigidbody2D.velocity = _speed * velocity;
             }
 
-            Brick brick = collision.gameObject.GetComponent<Brick>();
-            if(brick != null)
-            {
-                brick.Destroy();
-            }
+            Utils.InvokeAction(_onBounce, collision.gameObject);
         }
     }
     
@@ -160,7 +151,7 @@ public class Ball : MonoBehaviour
     #region private members
 
     private IGameStartedProvider _gameStartedProvider;
-    private Action<bool> _onBounce;
+    private Action<GameObject> _onBounce;
     private Action _onExit;
     private float _speed;
     private PositionResetter _positionInitializer;

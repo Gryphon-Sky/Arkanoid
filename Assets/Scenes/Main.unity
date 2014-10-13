@@ -391,9 +391,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593666b0d99e5ba42b51ae2f2b195979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BrickDestroyed: {fileID: 8300000, guid: ff36ac2760766ec4d893e2b70486c9dd, type: 3}
-  BallBounced: {fileID: 8300000, guid: 6e980f8994ed0e640a080b6a023d8336, type: 3}
+  BallBouncedWall: {fileID: 0}
   BallBouncedPaddle: {fileID: 8300000, guid: 6e980f8994ed0e640a080b6a023d8336, type: 3}
+  BallBouncedBrick: {fileID: 8300000, guid: ff36ac2760766ec4d893e2b70486c9dd, type: 3}
   LevelComplete: {fileID: 8300000, guid: 84ab23b0463f3ee4cac1b80caf6eda24, type: 3}
   LevelOver: {fileID: 8300000, guid: a29ae0277da07804b86f02d2efb3b826, type: 3}
   GameComplete: {fileID: 8300000, guid: 35cb703c261d0b741b00cc7e938019a9, type: 3}

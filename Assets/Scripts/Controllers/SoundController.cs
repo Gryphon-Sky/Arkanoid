@@ -7,10 +7,9 @@ public class SoundController : MonoBehaviour
     
     #region exposed
 
-    public AudioClip BrickDestroyed;
-
-    public AudioClip BallBounced;
+    public AudioClip BallBouncedWall;
     public AudioClip BallBouncedPaddle;
+    public AudioClip BallBouncedBrick;
 
     public AudioClip LevelComplete;
     public AudioClip LevelOver;
@@ -36,14 +35,20 @@ public class SoundController : MonoBehaviour
     
     #region public methods
     
-    public void PlayBrickDestroyedSound()
+    public void PlayBallBouncedSound(GameplayController.BounceType bounceType)
     {
-        PlayClip(BrickDestroyed);
-    }
-    
-    public void PlayBallBouncedSound(bool paddle)
-    {
-        PlayClip(paddle ? BallBouncedPaddle : BallBounced);
+        switch(bounceType)
+        {
+            case GameplayController.BounceType.Wall:
+                PlayClip(BallBouncedWall);
+                break;
+            case GameplayController.BounceType.Paddle:
+                PlayClip(BallBouncedPaddle);
+                break;
+            case GameplayController.BounceType.Brick:
+                PlayClip(BallBouncedBrick);
+                break;
+        }
     }
     
     public void PlayLevelCompleteSound()

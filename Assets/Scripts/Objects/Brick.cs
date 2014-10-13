@@ -8,13 +8,25 @@ public class Brick : MonoBehaviour
     ////////////////////////////////////////////////////////////////////////////////
     
     #region public methods
-    
+
     public void Init(Action<GameObject> onDestroy)
     {
         _onDestroy = onDestroy;
     }
     
-    public void Destroy()
+    public void OnBallBounced()
+    {
+        Destroy();
+    }
+    
+    #endregion
+    
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    
+    #region private methods
+    
+    private void Destroy()
     {
         Utils.InvokeAction<GameObject>(_onDestroy, gameObject);
         GameObject.Destroy(gameObject);
