@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class Brick : MonoBehaviour

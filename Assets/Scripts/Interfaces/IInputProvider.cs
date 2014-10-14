@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public interface IInputProvider
+﻿public interface IInputProvider
 {
     float InputX { get; }
 }

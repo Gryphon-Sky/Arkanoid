@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public interface IGameStartedProvider
+﻿public interface IGameStartedProvider
 {
     bool GameStarted { get; }
 }
