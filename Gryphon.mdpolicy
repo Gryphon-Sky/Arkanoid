@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PolicySet name="Custom.mdpolicy">
-  <TextStylePolicy inheritsSet="null" scope="text/x-csharp" />
+  <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp">
+    <FileWidth>120</FileWidth>
+    <NoTabsAfterNonTabs>True</NoTabsAfterNonTabs>
+    <EolMarker>Windows</EolMarker>
+  </TextStylePolicy>
   <CSharpFormattingPolicy inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp">
     <IndentSwitchBody>True</IndentSwitchBody>
     <AnonymousMethodBraceStyle>NextLine</AnonymousMethodBraceStyle>
@@ -15,12 +19,12 @@
     <ForBraceForcement>AddBraces</ForBraceForcement>
     <WhileBraceForcement>AddBraces</WhileBraceForcement>
     <UsingBraceForcement>AddBraces</UsingBraceForcement>
+    <FixedBraceForcement>AddBraces</FixedBraceForcement>
     <ElseNewLinePlacement>NewLine</ElseNewLinePlacement>
     <ElseIfNewLinePlacement>SameLine</ElseIfNewLinePlacement>
     <CatchNewLinePlacement>NewLine</CatchNewLinePlacement>
     <FinallyNewLinePlacement>NewLine</FinallyNewLinePlacement>
     <WhileNewLinePlacement>NewLine</WhileNewLinePlacement>
-    <ArrayInitializerWrapping>DoNotChange</ArrayInitializerWrapping>
     <BeforeMethodDeclarationParentheses>False</BeforeMethodDeclarationParentheses>
     <BeforeMethodCallParentheses>False</BeforeMethodCallParentheses>
     <BeforeConstructorDeclarationParentheses>False</BeforeConstructorDeclarationParentheses>
