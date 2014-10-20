@@ -48,7 +48,7 @@ public class UIController : MonoBehaviour
     public void ShowMessage(string message, float width)
     {
         _message = message;
-        _messageRect = new Rect(500.0f - width / 2.0f, 100.0f, width, 70.0f);
+        _messageRect = new Rect(500.0f - width / 2.0f, 200.0f, width, 70.0f);
         _isMessageShown = true;
     }
 
