@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class SoundController : MonoBehaviour
 {
@@ -11,9 +12,13 @@ public class SoundController : MonoBehaviour
     public AudioClip BallBouncedPaddle;
     public AudioClip BallBouncedBrick;
 
-    public AudioClip LevelComplete;
-    public AudioClip LevelOver;
-    public AudioClip GameComplete;
+    public AudioClip LifeLost;
+
+    public AudioClip LevelStarted;
+    public AudioClip LevelCompleted;
+
+    public AudioClip GameStarted;
+    public AudioClip GameCompleted;
     public AudioClip GameOver;
     
     #endregion
@@ -35,40 +40,50 @@ public class SoundController : MonoBehaviour
     
     #region public methods
     
-    public void PlayBallBouncedSound(GameplayController.BounceType bounceType)
+    public void PlayBallBouncedSound(GameplayController.BounceType bounceType, Action onPlayed)
     {
         switch(bounceType)
         {
             case GameplayController.BounceType.Wall:
-                PlayClip(BallBouncedWall);
+                PlayClip(BallBouncedWall, onPlayed);
                 break;
             case GameplayController.BounceType.Paddle:
-                PlayClip(BallBouncedPaddle);
+                PlayClip(BallBouncedPaddle, onPlayed);
                 break;
             case GameplayController.BounceType.Brick:
-                PlayClip(BallBouncedBrick);
+                PlayClip(BallBouncedBrick, onPlayed);
                 break;
         }
     }
     
-    public void PlayLevelCompleteSound()
+    public void PlayLifeLostSound(Action onPlayed)
     {
-        PlayClip(LevelComplete);
+        PlayClip(LifeLost, onPlayed);
     }
     
-    public void PlayLevelOverSound()
+    public void PlayLevelStartedSound(Action onPlayed)
     {
-        PlayClip(LevelOver);
+        PlayClip(LevelStarted, onPlayed);
     }
     
-    public void PlayGameCompleteSound()
+    public void PlayLevelCompletedSound(Action onPlayed)
     {
-        PlayClip(GameComplete);
+        PlayClip(LevelCompleted, onPlayed);
     }
     
-    public void PlayGameOverSound()
+    public void PlayGameStartedSound(Action onPlayed)
     {
-        PlayClip(GameOver);
+        PlayClip(GameStarted, onPlayed);
+    }
+    
+    public void PlayGameCompletedSound(Action onPlayed)
+    {
+        PlayClip(GameCompleted, onPlayed);
+    }
+    
+    public void PlayGameOverSound(Action onPlayed)
+    {
+        PlayClip(GameOver, onPlayed);
     }
     
     #endregion
@@ -78,14 +93,19 @@ public class SoundController : MonoBehaviour
     
     #region private methods
 
-    private void PlayClip(AudioClip clip)
+    private void PlayClip(AudioClip clip, Action onPlayed)
     {
         if(_soundEnabled && (clip != null))
         {
             AudioSource.PlayClipAtPoint(clip, Vector3.zero);
+            Utils.InvokeActionWithDelay(this, clip.length, onPlayed);
+        }
+        else
+        {
+            Utils.InvokeAction(onPlayed);
         }
     }
-    
+
     #endregion
     
     ////////////////////////////////////////////////////////////////////////////////

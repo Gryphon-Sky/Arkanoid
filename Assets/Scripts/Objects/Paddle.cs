@@ -37,9 +37,15 @@ public class Paddle : MonoBehaviour
         _rightBorder = RightWall.localPosition.x - (RightWall.localScale.x + Width) / 2;
     }
 
+    public void Disappear()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void Reinit()
     {
         _positionInitializer.ResetPosition();
+        gameObject.SetActive(true);
     }
     
     #endregion

@@ -95,7 +95,7 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
             ++_consecutiveBounces;
         }
 
-        SoundController.PlayBallBouncedSound(bounceType);
+        SoundController.PlayBallBouncedSound(bounceType, null);
     }
     
     public void OnBrickDestroyed()
@@ -107,16 +107,9 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
     
     public void OnLastBrickDestroyed()
     {
-        if(Level == Settings.MaxLevel)
-        {
-            GameComplete();
-        }
-        else
-        {
-            LevelComplete();
-        }
+        SoundController.PlayLevelCompletedSound(CompleteLevelOrGame);
     }
-    
+
     public void OnLose()
     {
 #if UNITY_EDITOR
@@ -128,14 +121,8 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
         --Lives;
 #endif
 
-        if(Lives == 0)
-        {
-            GameOver();
-        }
-        else
-        {
-            LevelOver();
-        }
+        Paddle.Disappear();
+        SoundController.PlayLifeLostSound(RestartLevelOrGame);
     }
     
     #endregion
@@ -150,8 +137,9 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
         Level = 1;
         Lives = Settings.MaxLives;
         ScoreController.ResetScore();
+        UIController.HideMessage();
         
-        InitLevel();
+        SoundController.PlayGameStartedSound(InitLevel);
     }
     
     private void InitLevel()
@@ -160,6 +148,8 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
         BricksController.SpawnBricksForLevel(Level, Settings.MaxLives);
 
         RestartLevel();
+        
+        SoundController.PlayLevelStartedSound(null);
     }
     
     private void RestartLevel()
@@ -171,31 +161,46 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
         Paddle.Reinit();
     }
     
+    private void RestartLevelOrGame()
+    {
+        if(Lives == 0)
+        {
+            GameOver();
+        }
+        else
+        {
+            RestartLevel();
+        }
+    }
+    
+    private void CompleteLevelOrGame()
+    {
+        if(Level == Settings.MaxLevel)
+        {
+            GameComplete();
+        }
+        else
+        {
+            LevelComplete();
+        }
+    }
+    
     private void LevelComplete()
     {
         ++Level;
         InitLevel();
-        SoundController.PlayLevelCompleteSound();
-    }
-    
-    private void LevelOver()
-    {
-        RestartLevel();
-        SoundController.PlayLevelOverSound();
     }
     
     private void GameComplete()
     {
         UIController.ShowGameCompleteMessage(ScoreController.Score);
-        InitGame();
-        SoundController.PlayGameCompleteSound();
+        SoundController.PlayGameCompletedSound(InitGame);
     }
     
     private void GameOver()
     {
         UIController.ShowGameOverMessage(ScoreController.Score);
-        InitGame();
-        SoundController.PlayGameOverSound();
+        SoundController.PlayGameOverSound(InitGame);
     }
 
     #endregion
@@ -225,7 +230,6 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
         {
             GameStarted = true;
             Ball.Launch();
-            UIController.HideMessage();
         }
     }
     

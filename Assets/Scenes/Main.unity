@@ -391,13 +391,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593666b0d99e5ba42b51ae2f2b195979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BallBouncedWall: {fileID: 0}
-  BallBouncedPaddle: {fileID: 8300000, guid: 6e980f8994ed0e640a080b6a023d8336, type: 3}
+  BallBouncedWall: {fileID: 8300000, guid: 08211bbc71599f340a3e9fb36ea11258, type: 3}
+  BallBouncedPaddle: {fileID: 8300000, guid: d9eb998c9def2ce4f8cd117fbafbbbc8, type: 3}
   BallBouncedBrick: {fileID: 8300000, guid: ff36ac2760766ec4d893e2b70486c9dd, type: 3}
-  LevelComplete: {fileID: 8300000, guid: 84ab23b0463f3ee4cac1b80caf6eda24, type: 3}
-  LevelOver: {fileID: 8300000, guid: a29ae0277da07804b86f02d2efb3b826, type: 3}
-  GameComplete: {fileID: 8300000, guid: 35cb703c261d0b741b00cc7e938019a9, type: 3}
-  GameOver: {fileID: 8300000, guid: 88c819bb338dece42b3f817a6108ca9b, type: 3}
+  LifeLost: {fileID: 8300000, guid: 7dc674c3e1726e1468eb7d6081649efe, type: 3}
+  LevelStarted: {fileID: 8300000, guid: 1df036dcdefcff143ab3af2c26934e4b, type: 3}
+  LevelCompleted: {fileID: 0}
+  GameStarted: {fileID: 0}
+  GameCompleted: {fileID: 0}
+  GameOver: {fileID: 8300000, guid: 1209061006570fb4a8469847ca094e39, type: 3}
 --- !u!4 &1131419035
 Transform:
   m_ObjectHideFlags: 0
