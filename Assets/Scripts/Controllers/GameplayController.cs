@@ -137,8 +137,12 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
         Level = 1;
         Lives = Settings.MaxLives;
         ScoreController.ResetScore();
-        UIController.HideMessage();
-        
+
+        if(Settings.Sounds)
+        {
+            UIController.HideMessage();
+        }
+
         SoundController.PlayGameStartedSound(InitLevel);
     }
     
@@ -230,6 +234,11 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
         {
             GameStarted = true;
             Ball.Launch();
+
+            if(!Settings.Sounds)
+            {
+                UIController.HideMessage();
+            }
         }
     }
     
