@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InputController : MonoBehaviour, IInputProvider
@@ -8,6 +9,15 @@ public class InputController : MonoBehaviour, IInputProvider
     #region IInputProvider
     
     public float InputX { get; private set; }
+    
+    #endregion
+    
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    
+    #region public members
+    
+    public Action OnFire;
     
     #endregion
     
@@ -25,6 +35,11 @@ public class InputController : MonoBehaviour, IInputProvider
         if(Mathf.Abs(keyboard) > Mathf.Abs(mouse))
         {
             InputX = keyboard;
+        }
+        
+        if(Input.GetButton("Fire"))
+        {
+            Utils.InvokeAction(OnFire);
         }
     }
 

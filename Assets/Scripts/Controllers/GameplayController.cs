@@ -156,6 +156,16 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
         SoundController.PlayLevelStartedSound(null);
     }
     
+    private void StartGame()
+    {
+        if(!GameStarted)
+        {
+            GameStarted = true;
+            Ball.Launch();
+            UIController.HideMessage();
+        }
+    }
+    
     private void RestartLevel()
     {
         GameStarted = false;
@@ -219,29 +229,24 @@ public class GameplayController : MonoBehaviour, IGameStartedProvider
 #if UNITY_EDITOR
         DebugShadow.SetActive(Settings.DebugMode);
 #endif
+
         Ball.Init(this, Settings.MaxAngle, OnBallBounced, OnLose);
         Paddle.Init(InputController, Settings.PaddleSpeed);
         BricksController.Init(OnBrickDestroyed, OnLastBrickDestroyed);
-        SoundController.Init(Settings.Sounds);
+
         ScoreController.Init(UIController.SetScore, UIController.SetHighscore);
+
+        InputController.OnFire += StartGame;
+        SoundController.Init(Settings.Sounds);
 
         InitGame();
     }
     
-    private void FixedUpdate()
+    private void OnDestroy()
     {
-        if(!GameStarted && Input.GetButton("Fire"))
-        {
-            GameStarted = true;
-            Ball.Launch();
-
-            if(!Settings.Sounds)
-            {
-                UIController.HideMessage();
-            }
-        }
+        InputController.OnFire -= StartGame;
     }
-    
+
     #endregion
 
     ////////////////////////////////////////////////////////////////////////////////
